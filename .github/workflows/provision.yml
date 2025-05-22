@@ -1,4 +1,4 @@
-name: Terraform CI with Manual Approval
+name: Terraform Provision
 
 on:
   workflow_dispatch:
