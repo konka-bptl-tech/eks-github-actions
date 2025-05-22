@@ -14,7 +14,7 @@ on:
 
 jobs:
   plan:
-    name: Terraform Plan
+    name: Terraform Destroy
     runs-on: self-hosted
     defaults:
       run:
