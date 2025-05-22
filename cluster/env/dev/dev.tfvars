@@ -17,7 +17,7 @@ vpc = {
     create_nat = true
 }
 eks = {
-    eks_version = "1.30"
+    eks_version = "1.31"
     access_cidr = ["0.0.0.0/0"]
     node_groups = {
         blue = {
