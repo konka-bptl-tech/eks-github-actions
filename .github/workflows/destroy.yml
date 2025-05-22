@@ -30,4 +30,4 @@ jobs:
       run: terraform init -backend-config=env/dev/backend.tfvars
 
     - name: Terraform Destroy
-      run: terraform destroy -var-file=env/dev/dev.tfvars -input=false
+      run: terraform destroy -var-file=env/dev/dev.tfvars -auto-approve -input=false
