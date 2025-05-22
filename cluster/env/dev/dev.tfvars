@@ -30,7 +30,6 @@ eks = {
     }
     addons = {
         vpc-cni = "v1.19.5-eksbuild.1"
-        coredns = "v1.11.4-eksbuild.10"
     }
     eks_iam_access = {
         admin = {
