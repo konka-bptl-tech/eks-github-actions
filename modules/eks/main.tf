@@ -91,6 +91,7 @@ resource "aws_eks_node_group" "example" {
 
 # EKS Addons
 resource "aws_eks_addon" "example" {
+  depends_on = [ aws_eks_node_group.example ]
   for_each = var.addons
   cluster_name = aws_eks_cluster.example.name
   addon_name   = each.key
