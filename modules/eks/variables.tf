@@ -27,6 +27,15 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+variable "endpoint_private_access" {
+  description = "Whether to enable private access to the EKS cluster endpoint."
+  type        = bool
+}
+variable "endpoint_public_access" {
+  description = "Wheather to enable public access to the EKS cluster endpoint."
+  type        = bool
+}
+
 variable "node_groups" {}
 variable "addons" {}
 variable "eks_iam_access" {}
