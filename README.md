@@ -51,4 +51,144 @@ For production environments, it's best to use **private endpoint access** and:
 * Add interface VPC endpoints for EKS API.
 * Secure access using fine-grained **security group rules**.
 
-Let me know if you’d like to tailor this explanation for your resume or an interview script.
+---
+Great thought, Konka! You're now moving from traditional `aws-auth` based access to **fine-grained RBAC with EKS Access Entry**, which is the **modern and recommended approach** (especially from EKS Pod Identity and multi-tenant access management perspective).
+
+---
+
+## 🎯 Goal Recap
+
+You want to give:
+
+* **Siva**: **Read-only access** to the **`expense` namespace**
+* **Ram**: **Full access** to the **`instana` namespace**
+
+And you want to achieve this using **EKS Access Entry** via **Terraform**.
+
+---
+
+## ✅ Step-by-step Plan (Terraform-based)
+
+### 🔹 Step 1: Create IAM Users or use existing ones
+
+Make sure `siva` and `ram` are AWS IAM users (or roles if using SSO/federation).
+
+You’ll need their **IAM ARN**.
+
+---
+
+### 🔹 Step 2: Create `eks_access_entry` for each user
+
+```hcl
+resource "aws_eks_access_entry" "siva" {
+  cluster_name = module.eks.cluster_name
+  principal_arn = "arn:aws:iam::<account_id>:user/siva"
+  type          = "STANDARD"
+}
+
+resource "aws_eks_access_entry" "ram" {
+  cluster_name = module.eks.cluster_name
+  principal_arn = "arn:aws:iam::<account_id>:user/ram"
+  type          = "STANDARD"
+}
+```
+
+---
+
+### 🔹 Step 3: Create RBAC Roles and RoleBindings
+
+You’ll define Kubernetes RBAC using Terraform (or Helm if you're templating).
+
+#### 🧾 For Siva (Read-only in `expense`):
+
+```hcl
+resource "kubernetes_role" "siva_expense_readonly" {
+  metadata {
+    name      = "read-only"
+    namespace = "expense"
+  }
+
+  rule {
+    api_groups = [""]
+    resources  = ["pods", "services", "configmaps"]
+    verbs      = ["get", "list", "watch"]
+  }
+
+  rule {
+    api_groups = ["apps"]
+    resources  = ["deployments"]
+    verbs      = ["get", "list", "watch"]
+  }
+}
+
+resource "kubernetes_role_binding" "siva_binding" {
+  metadata {
+    name      = "siva-readonly-binding"
+    namespace = "expense"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = kubernetes_role.siva_expense_readonly.metadata[0].name
+  }
+
+  subject {
+    kind      = "User"
+    name      = "arn:aws:iam::<account_id>:user/siva"
+    api_group = "rbac.authorization.k8s.io"
+  }
+}
+```
+
+---
+
+#### 🧾 For Ram (Full access in `instana`):
+
+```hcl
+resource "kubernetes_role" "ram_instana_admin" {
+  metadata {
+    name      = "admin"
+    namespace = "instana"
+  }
+
+  rule {
+    api_groups = ["", "apps", "batch", "extensions", "*"]
+    resources  = ["*"]
+    verbs      = ["*"]
+  }
+}
+
+resource "kubernetes_role_binding" "ram_binding" {
+  metadata {
+    name      = "ram-admin-binding"
+    namespace = "instana"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = kubernetes_role.ram_instana_admin.metadata[0].name
+  }
+
+  subject {
+    kind      = "User"
+    name      = "arn:aws:iam::<account_id>:user/ram"
+    api_group = "rbac.authorization.k8s.io"
+  }
+}
+```
+
+---
+
+## ⚠️ Important Notes
+
+* Make sure your EKS cluster has **Access Entry** support (EKS version >= 1.24).
+* `aws_eks_access_entry` adds users without touching the `aws-auth` ConfigMap.
+* These users must run `aws eks update-kubeconfig` to access the cluster.
+* If you’re using SSO or federated identities, use their IAM Role ARN instead of User ARN.
+
+---
+
+Do you want this entire config in a single Terraform module? Or do you want help integrating it into your current setup?
+
