@@ -58,21 +58,21 @@ siva_instance = {
   remote_exec_user = "ec2-user"
   user_data  = <<-EOF
     #!/bin/bash
-    dnf update -y
-    dnf install git tmux -y
+    sudo dnf update -y
+    sudo dnf install git tmux -y
     ARCH=amd64
     PLATFORM=$(uname -s)_$ARCH
     curl -sLO "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_$PLATFORM.tar.gz"
     # (Optional) Verify checksum
     curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_checksums.txt" | grep $PLATFORM | sha256sum --check
     tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
-    mv /tmp/eksctl /usr/local/bin
+    sudo mv /tmp/eksctl /usr/local/bin
     curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.31.7/2025-04-17/bin/linux/amd64/kubectl
     chmod +x ./kubectl
-    mv ./kubectl /usr/local/bin
-    git clone https://github.com/ahmetb/kubectx /opt/kubectx
-    ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
-    ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+    sudo mv ./kubectl /usr/local/bin
+    sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+    sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+    sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
     curl -sS https://webinstall.dev/k9s | bash
     aws eks update-kubeconfig --name dev-eks-tf-eks-cluster --region us-east-1
     EOF
