@@ -93,6 +93,8 @@ siva_instance = {
     sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
     curl -sS https://webinstall.dev/k9s | bash
     aws eks update-kubeconfig --name dev-eks-tf-eks-cluster --region us-east-1
+    echo "alias k=kubectl" >> /home/ec2-user/.bashrc
+    source /home/ec2-user/.bashrc
     EOF
   iam_instance_profile = "siva"
 }
