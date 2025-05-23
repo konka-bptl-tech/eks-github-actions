@@ -1,5 +1,5 @@
 locals {
-  name = "${var.environment}-${var.project}-${var.instance_name}"
+  name = "${var.environment}-${var.project_name}-${var.instance_name}"
 }
 resource "aws_instance" "example" {
   ami                    = var.ami
@@ -8,6 +8,7 @@ resource "aws_instance" "example" {
   vpc_security_group_ids = var.security_groups
   monitoring             = var.monitoring
   subnet_id              = var.subnet_id
+  iam_instance_profile = var.iam_instance_profile
   tags = merge(
     {
       Name = local.name

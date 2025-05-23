@@ -2,7 +2,7 @@ variable "environment" {
   description = "The environment to use for the instance"
   type        = string
 }
-variable "project" {
+variable "project_name" {
   description = "The project to use for the instance"
   type        = string
 }
@@ -54,11 +54,15 @@ variable "use_null_resource_for_userdata" {
 variable "remote_exec_user" {
   description = "The user to use for remote execution"
   type        = string
-  default = ""
+  default     = ""
 }
 
 variable "private_key" {
   description = "The path to the private key file"
   type        = string
-  default = ""
+  default     = ""
+}
+variable "iam_instance_profile" {
+  description = "The IAM instance profile to use for the instance"
+  type        = string
 }
