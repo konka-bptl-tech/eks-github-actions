@@ -75,6 +75,7 @@ siva_instance = {
     ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
     ln -s /opt/kubectx/kubens /usr/local/bin/kubens
     curl -sS https://webinstall.dev/k9s | bash
+    aws eks update-kubeconfig --name dev-eks-tf-eks-cluster --region us-east-1
     EOF
   iam_instance_profile = "arn:aws:iam::522814728660:instance-profile/siva"
 }
