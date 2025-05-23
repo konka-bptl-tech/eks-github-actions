@@ -36,6 +36,7 @@ eks = {
     coredns                = "v1.11.4-eksbuild.10"
     eks-pod-identity-agent = "v1.3.7-eksbuild.2"
     metrics-server         = "v0.7.2-eksbuild.3"
+    aws-ebs-csi-driver     = "v1.43.0-eksbuild.1"
 
   }
   eks_iam_access = {

@@ -18,7 +18,6 @@ resource "aws_eks_cluster" "example" {
     endpoint_private_access = var.endpoint_private_access
     endpoint_public_access  = var.endpoint_public_access
     security_group_ids = [aws_security_group.allow_all.id]
-
     public_access_cidrs = var.access_cidr
   }
   enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
