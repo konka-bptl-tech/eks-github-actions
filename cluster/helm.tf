@@ -3,7 +3,7 @@ resource "null_resource" "kube-config" {
 
   provisioner "local-exec" {
     command = <<EOF
-aws eks update-kubeconfig --name ${module.eks.id}
+aws eks update-kubeconfig --name ${module.eks.id} --region us-east-1
 kubectl get pods -A
 EOF
   }
