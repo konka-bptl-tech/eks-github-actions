@@ -45,6 +45,6 @@ eks = {
 
 # aws eks describe-addon-versions --addon-name coredns --query "addons[0].addonVersions[*].addonVersion" --output text
 
-aws eks describe-addon-versions \
-  --addon-name kube-proxy \
-  --kubernetes-version 1.31
+# aws eks describe-addon-versions \
+#   --addon-name kube-proxy \
+#   --kubernetes-version 1.31
