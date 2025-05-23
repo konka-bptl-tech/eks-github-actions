@@ -104,5 +104,5 @@ ebs_pod_identity = {
   namespace               = "kube-system"
   service_account         = "ebs-csi-controller-sa"
   pod_identity_role_name  = "ebs-csi-controller-sa"
-  managed_policy_arns     = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+  managed_policy_arns     = ["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"]
 }
