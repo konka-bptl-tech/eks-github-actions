@@ -1,6 +1,10 @@
-resource "null_resource" "kube-bootstrap" {
+resource "null_resource" "kube-config" {
   depends_on = [module.eks]
+
   provisioner "local-exec" {
-    command = "aws eks update-kubeconfig --name ${module.eks.id}"
+    command = <<EOF
+aws eks update-kubeconfig --name ${module.eks.id}
+kubectl get pods -A
+EOF
   }
 }
