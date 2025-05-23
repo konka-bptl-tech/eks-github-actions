@@ -30,9 +30,9 @@ eks = {
   }
   addons = {
     vpc-cni                = "v1.19.5-eksbuild.1"
-    kube-proxy             = "v1.32.3-eksbuild.2"
-    coredns                = "v1.11.4-eksbuild.2"
-    eks-pod-identity-agent = "v1.3.5-eksbuild.2"
+    kube-proxy             = "v1.31.7-eksbuild.7"
+    coredns                = "v1.11.4-eksbuild.10"
+    eks-pod-identity-agent = "v1.3.7-eksbuild.2"
   }
   eks_iam_access = {
     admin = {
@@ -44,3 +44,7 @@ eks = {
 }
 
 # aws eks describe-addon-versions --addon-name coredns --query "addons[0].addonVersions[*].addonVersion" --output text
+
+aws eks describe-addon-versions \
+  --addon-name kube-proxy \
+  --kubernetes-version 1.31
