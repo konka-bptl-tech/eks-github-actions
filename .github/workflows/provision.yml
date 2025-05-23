@@ -1,6 +1,11 @@
 name: Terraform Provision
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'cluster/**'
   workflow_dispatch:
 
 jobs:
