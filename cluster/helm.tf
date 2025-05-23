@@ -1,5 +1,5 @@
 resource "null_resource" "kube-bootstrap" {
-  depends_on = [aws_eks_cluster.example]
+  depends_on = [module.eks]
   provisioner "local-exec" {
     command = "aws eks update-kubeconfig --name ${module.eks.id}"
   }
