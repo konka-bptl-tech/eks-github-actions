@@ -8,6 +8,8 @@ common_variables = {
     "Terraform"   = "true"
   }
 }
+
+# VPC
 vpc = {
   vpc_cidr             = "10.1.0.0/16"
   availability_zone    = ["us-east-1a", "us-east-1b"]
@@ -16,6 +18,8 @@ vpc = {
   db_subnet_cidrs      = ["10.1.21.0/24", "10.1.22.0/24"]
   create_nat           = true
 }
+
+# EKS Cluster
 eks = {
   eks_version = "1.31"
   access_cidr = ["0.0.0.0/0"]
@@ -62,6 +66,7 @@ eks = {
 
 # aws eks describe-addon-versions --addon-name metric-server --kubernetes-version 1.31
 
+# Siva EC2 Instance
 siva_instance = { 
   instance_name = "siva-ec2-instance" 
   instance_type  = "t3.micro"
@@ -90,4 +95,12 @@ siva_instance = {
     aws eks update-kubeconfig --name dev-eks-tf-eks-cluster --region us-east-1
     EOF
   iam_instance_profile = "siva"
+}
+
+# EBS Pod Identity
+ebs_pod_identity = {
+  namespace               = "kube-system"
+  service_account         = "ebs-csi-controller-sa"
+  pod_identity_role_name  = "ebs-csi-controller-sa"
+  managed_policy_arns     = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
 }
