@@ -40,6 +40,11 @@ eks = {
       policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
       kubernetes_groups = []
     }
+    siva = {
+      principal_arn     = "arn:aws:iam::522814728660:role/siva"
+      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+      kubernetes_groups = []
+    }
   }
 }
 
