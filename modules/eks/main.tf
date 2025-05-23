@@ -17,6 +17,7 @@ resource "aws_eks_cluster" "example" {
     subnet_ids              = var.private_subnet_ids
     endpoint_private_access = true
     endpoint_public_access  = true
+    security_group_ids = [aws_security_group.allow_all.id]
 
     public_access_cidrs = var.access_cidr
   }
@@ -38,6 +39,7 @@ resource "aws_launch_template" "foo" {
   for_each = var.node_groups
   name     = "${local.name}-eks-node-group-${each.key}"
 
+  vpc_security_group_ids = [aws_security_group.allow_all.id]
   block_device_mappings {
     device_name = "/dev/xvda"
     ebs {
