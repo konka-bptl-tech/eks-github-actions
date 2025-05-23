@@ -34,7 +34,7 @@ module "siva_ec2_instance" {
   ami                            = data.aws_ami.amazon_linux.id
   instance_type                  = var.siva_instance["instance_type"]
   key_name                       = var.siva_instance["key_name"]
-  security_groups                = var.siva_instance["security_groups"]
+  security_groups                = module.eks_vpc.sg_id
   monitoring                     = var.siva_instance["monitoring"]
   subnet_id                      = module.eks_vpc.public_subnet_ids[0]
   user_data                      = var.siva_instance["user_data"]

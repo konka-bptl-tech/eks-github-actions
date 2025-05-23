@@ -53,7 +53,6 @@ siva_instance = {
   instance_name = "siva-ec2-instance" 
   instance_type  = "t3.micro"
   key_name  = "siva"
-  security_groups  = ["sg-09b8b4c7a9821427d"]
   monitoring  = false
   use_null_resource_for_userdata  = true
   remote_exec_user = "ec2-user"
@@ -77,5 +76,5 @@ siva_instance = {
     curl -sS https://webinstall.dev/k9s | bash
     aws eks update-kubeconfig --name dev-eks-tf-eks-cluster --region us-east-1
     EOF
-  iam_instance_profile = "arn:aws:iam::522814728660:instance-profile/siva"
+  iam_instance_profile = "siva"
 }

@@ -147,3 +147,32 @@ resource "aws_route" "db_nat" {
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.example[count.index].id
 }
+
+resource "aws_security_group" "allow_all" {
+  name        = "allow-all-traffic"
+  description = "Security group that allows all inbound and outbound traffic"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "Allow all inbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1" # all protocols
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1" # all protocols
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(
+    var.tags,
+    {
+      Name = "${local.name}-sg"
+    }
+  )
+}
