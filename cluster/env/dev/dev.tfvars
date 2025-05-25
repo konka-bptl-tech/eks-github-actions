@@ -66,7 +66,7 @@ eks = {
       principal_arn     = "arn:aws:iam::522814728660:role/hello"
       policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
       kubernetes_groups = []
-      access_type       = "namespace"
+      access_scope      = "namespace"
       namespaces        = ["default"]
     }
   }
