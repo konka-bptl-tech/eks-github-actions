@@ -15,25 +15,36 @@ resource "aws_eks_access_entry" "example" {
 #   }
 # }
 
-resource "aws_eks_access_policy_association" "example" {
-  cluster_name  = var.cluster_name
-  policy_arn    = var.policy_arn
-  principal_arn = var.principal_arn
+# resource "aws_eks_access_policy_association" "example" {
+#   cluster_name  = var.cluster_name
+#   policy_arn    = var.policy_arn
+#   principal_arn = var.principal_arn
 
-  dynamic "access_scope" {
-    for_each = var.access_type == "namespace" ? [1] : []
+#   dynamic "access_scope" {
+#     for_each = var.access_type == "namespace" ? [1] : []
 
-    content {
-      type       = "namespace"
-      namespaces = var.namespaces
-    }
-  }
+#     content {
+#       type       = "namespace"
+#       namespaces = var.namespaces
+#     }
+#   }
 
-  # If type is cluster, define a static block outside dynamic
-  lifecycle {
-    ignore_changes = [access_scope]
-  }
-}
+#   # If type is cluster, define a static block outside dynamic
+#   lifecycle {
+#     ignore_changes = [access_scope]
+#   }
+# }
+
+# resource "aws_eks_access_policy_association" "cluster_scope" {
+#   count        = var.access_type == "cluster" ? 1 : 0
+#   cluster_name = var.cluster_name
+#   policy_arn   = var.policy_arn
+#   principal_arn = var.principal_arn
+
+#   access_scope {
+#     type = "cluster"
+#   }
+# }
 
 resource "aws_eks_access_policy_association" "cluster_scope" {
   count        = var.access_type == "cluster" ? 1 : 0
@@ -43,6 +54,18 @@ resource "aws_eks_access_policy_association" "cluster_scope" {
 
   access_scope {
     type = "cluster"
+  }
+}
+
+resource "aws_eks_access_policy_association" "namespace_scope" {
+  count        = var.access_type == "namespace" ? 1 : 0
+  cluster_name = var.cluster_name
+  policy_arn   = var.policy_arn
+  principal_arn = var.principal_arn
+
+  access_scope {
+    type       = "namespace"
+    namespaces = var.namespaces
   }
 }
 
