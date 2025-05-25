@@ -108,7 +108,7 @@ module "eks_iam_access" {
   principal_arn     = each.value["principal_arn"]
   kubernetes_groups = each.value["kubernetes_groups"]
   policy_arn        = each.value["policy_arn"]
-   namespaces       = each.value["namespaces"]
+  namespaces        = each.value["namespaces"]
 }
 
 
