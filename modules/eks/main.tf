@@ -104,11 +104,11 @@ module "eks_iam_access" {
   for_each = var.eks_iam_access
   source   = "./eks-iam-access"
   cluster_name      = aws_eks_cluster.example.name
-  access_type       = each.value["access_type"]    
   principal_arn     = each.value["principal_arn"]
   kubernetes_groups = each.value["kubernetes_groups"]
   policy_arn        = each.value["policy_arn"]
-  namespaces        = each.value["namespaces"]
+  # access_type       = each.value["access_type"]
+  # namespaces        = each.value["namespaces"]
 }
 
 

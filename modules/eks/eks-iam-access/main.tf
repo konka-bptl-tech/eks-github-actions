@@ -5,15 +5,15 @@ resource "aws_eks_access_entry" "example" {
   type              = "STANDARD"
 }
 
-# resource "aws_eks_access_policy_association" "example" {
-#   depends_on = [ aws_eks_access_entry.example ]
-#   cluster_name  = var.cluster_name
-#   policy_arn    = var.policy_arn
-#   principal_arn = var.principal_arn
-#   access_scope {
-#     type       = "cluster"
-#   }
-# }
+resource "aws_eks_access_policy_association" "example" {
+  depends_on = [ aws_eks_access_entry.example ]
+  cluster_name  = var.cluster_name
+  policy_arn    = var.policy_arn
+  principal_arn = var.principal_arn
+  access_scope {
+    type       = "cluster"
+  }
+}
 
 # resource "aws_eks_access_policy_association" "example" {
 #   cluster_name  = var.cluster_name
@@ -46,38 +46,38 @@ resource "aws_eks_access_entry" "example" {
 #   }
 # }
 
-resource "aws_eks_access_policy_association" "cluster_scope" {
-  count        = var.access_type == "cluster" ? 1 : 0
-  cluster_name = var.cluster_name
-  policy_arn   = var.policy_arn
-  principal_arn = var.principal_arn
+# resource "aws_eks_access_policy_association" "cluster_scope" {
+#   count        = var.access_type == "cluster" ? 1 : 0
+#   cluster_name = var.cluster_name
+#   policy_arn   = var.policy_arn
+#   principal_arn = var.principal_arn
 
-  access_scope {
-    type = "cluster"
-  }
-}
+#   access_scope {
+#     type = "cluster"
+#   }
+# }
 
-resource "aws_eks_access_policy_association" "namespace_scope" {
-  count        = var.access_type == "namespace" ? 1 : 0
-  cluster_name = var.cluster_name
-  policy_arn   = var.policy_arn
-  principal_arn = var.principal_arn
+# resource "aws_eks_access_policy_association" "namespace_scope" {
+#   count        = var.access_type == "namespace" ? 1 : 0
+#   cluster_name = var.cluster_name
+#   policy_arn   = var.policy_arn
+#   principal_arn = var.principal_arn
 
-  access_scope {
-    type       = "namespace"
-    namespaces = var.namespaces
-  }
-}
+#   access_scope {
+#     type       = "namespace"
+#     namespaces = var.namespaces
+#   }
+# }
 
-variable "access_type" {
-  type    = string
-  default = "cluster"  # or "namespace"
-}
+# variable "access_type" {
+#   type    = string
+#   default = "cluster"  # or "namespace"
+# }
 
-variable "namespaces" {
-  type    = list(string)
-  default = []
-}
+# variable "namespaces" {
+#   type    = list(string)
+#   default = []
+# }
 
 
 variable "cluster_name" {
