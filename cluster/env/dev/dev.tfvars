@@ -62,12 +62,21 @@ eks = {
       kubernetes_groups = []
       access_type       = "cluster"
     }
+    hello = {
+      principal_arn     = "arn:aws:iam::522814728660:role/hello"
+      policy_arn        = "arn:aws:eks:us-east-1:aws:cluster-access-policy/AmazonEKSViewPolicy"
+      kubernetes_groups = []
+      access_type       = "namespace"
+      namespaces        = ["default"]
+    }
   }
 }
 
 # aws eks describe-addon-versions --addon-name coredns --query "addons[0].addonVersions[*].addonVersion" --output text
 
 # aws eks describe-addon-versions --addon-name metric-server --kubernetes-version 1.31
+
+# aws eks list-access-policies --region us-east-1
 
 # Siva EC2 Instance
 siva_instance = { 
