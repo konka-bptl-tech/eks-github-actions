@@ -61,7 +61,7 @@ eks = {
     }
     hello = {
       principal_arn     = "arn:aws:iam::522814728660:role/hello"
-      policy_arn        = "arn:aws:iam::522814728660:policy/AmazonEKSViewPolicy"
+      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy"
       kubernetes_groups = []
     }
     hi = {
