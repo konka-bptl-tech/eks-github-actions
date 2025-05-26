@@ -100,19 +100,31 @@ resource "aws_eks_addon" "example" {
   resolve_conflicts_on_create = "OVERWRITE"
 }
 
+# module "eks_iam_access" {
+#   depends_on = [ aws_eks_cluster.example ]
+#   source = "./eks-iam-access"
+#   for_each = var.eks_iam_access
+#   cluster_name = aws_eks_cluster.example.name
+#   principal_arn = each.value["principal_arn"]
+#   policy_arn = each.value["policy_arn"]
+#   access_scope_type = each.value["access_scope_type"]
+#   kubernetes_groups = lookup(each.value, "kubernetes_groups", [])
+#   # If access_scope_type is "namespace", use the namespaces provided, otherwise default to an empty list
+#   namespaces = each.value.access_scope_type == "namespace" ? try(each.value.namespaces, []) : []
+#   # namespaces = each.value.access_scope_type == "namespace" ? lookup(each.value, "namespaces", []) : []
+# }
 module "eks_iam_access" {
-  depends_on = [ aws_eks_cluster.example ]
-  source = "./eks-iam-access"
-  for_each = var.eks_iam_access
-  cluster_name = aws_eks_cluster.example.name
-  principal_arn = each.value["principal_arn"]
-  policy_arn = each.value["policy_arn"]
-  access_scope_type = each.value["access_scope_type"]
-  kubernetes_groups = lookup(each.value, "kubernetes_groups", [])
-  # If access_scope_type is "namespace", use the namespaces provided, otherwise default to an empty list
-  namespaces = each.value.access_scope_type == "namespace" ? try(each.value.namespaces, []) : []
-  # namespaces = each.value.access_scope_type == "namespace" ? lookup(each.value, "namespaces", []) : []
+  depends_on = [aws_eks_cluster.example]
+  source     = "./eks-iam-access"
+  for_each   = var.eks_iam_access
 
+  cluster_name      = aws_eks_cluster.example.name
+  principal_arn     = each.value["principal_arn"]
+  policy_arn        = each.value["policy_arn"]
+  access_scope_type = lookup(each.value, "access_scope_type", "cluster")
+  kubernetes_groups = lookup(each.value, "kubernetes_groups", [])
+
+  namespaces = lookup(each.value, "access_scope_type", "") == "namespace" ? lookup(each.value, "namespaces", []) : []
 }
 
 # variable "access_entries" {
