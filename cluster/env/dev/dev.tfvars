@@ -44,35 +44,35 @@ eks = {
 
   }
   eks_iam_access = {
-    admin = {
-      principal_arn     = "arn:aws:iam::522814728660:root"
-      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
-      kubernetes_groups = []
-    }
-    siva = {
-      principal_arn     = "arn:aws:iam::522814728660:role/siva"
-      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
-      kubernetes_groups = []
-    }
-    bptl = {
-      principal_arn     = "arn:aws:iam::522814728660:user/eks-siva.bapatlas.site"
-      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
-      kubernetes_groups = []
-    }
-    hello = {
-      principal_arn     = "arn:aws:iam::522814728660:role/hello"
-      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
-      kubernetes_groups = []
-      access_scope_type = "namespace"
-      namespaces        = ["default"]
-    }
-    hi = {
-      principal_arn     = "arn:aws:iam::522814728660:role/hi"
-      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
-      kubernetes_groups = []
-      access_scope_type = "namespace"
-      namespaces        = ["kube-system"]
-    }
+    # admin = {
+    #   principal_arn     = "arn:aws:iam::522814728660:root"
+    #   policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
+    #   kubernetes_groups = []
+    # }
+    # siva = {
+    #   principal_arn     = "arn:aws:iam::522814728660:role/siva"
+    #   policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
+    #   kubernetes_groups = []
+    # }
+    # bptl = {
+    #   principal_arn     = "arn:aws:iam::522814728660:user/eks-siva.bapatlas.site"
+    #   policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
+    #   kubernetes_groups = []
+    # }
+    # hello = {
+    #   principal_arn     = "arn:aws:iam::522814728660:role/hello"
+    #   policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
+    #   kubernetes_groups = []
+    #   access_scope_type = "namespace"
+    #   namespaces        = ["default"]
+    # }
+    # hi = {
+    #   principal_arn     = "arn:aws:iam::522814728660:role/hi"
+    #   policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
+    #   kubernetes_groups = []
+    #   access_scope_type = "namespace"
+    #   namespaces        = ["kube-system"]
+    # }
   }
 }
 
