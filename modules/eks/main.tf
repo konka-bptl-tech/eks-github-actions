@@ -101,15 +101,29 @@ resource "aws_eks_addon" "example" {
 }
 
 module "eks_iam_access" {
+  depends_on = [ aws_eks_cluster.example ]
+  source = "./eks-iam-access"
   for_each = var.eks_iam_access
-  source   = "./eks-iam-access"
-  cluster_name      = aws_eks_cluster.example.name
-  principal_arn     = each.value["principal_arn"]
-  kubernetes_groups = each.value["kubernetes_groups"]
-  policy_arn        = each.value["policy_arn"]
-  # access_type       = each.value["access_type"]
-  # namespaces        = each.value["namespaces"]
+  cluster_name = aws_eks_cluster.example.name
+  principal_arn = each.value.principal_arn
+  policy_arn = each.value.policy_arn
+  access_scope_type = each.value.access_scope_type
+  kubernetes_groups = lookup(each.value, "kubernetes_groups", [])
+  # If access_scope_type is "namespace", use the namespaces provided, otherwise default to an empty list
+  namespaces = each.value.access_scope_type == "namespace" ? try(each.value.namespaces, []) : []
+  # namespaces = each.value.access_scope_type == "namespace" ? lookup(each.value, "namespaces", []) : []
+
 }
+
+# variable "access_entries" {
+#   description = "List of access entries for EKS IAM access policies."
+#   type = map(object({
+#     principal_arn      = string
+#     policy_arn         = string
+#     access_scope_type  = string
+#   }))
+#   default = {}
+# }
 
 
 
