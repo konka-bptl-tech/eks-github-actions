@@ -48,19 +48,16 @@ eks = {
       principal_arn     = "arn:aws:iam::522814728660:root"
       policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
       kubernetes_groups = []
-      access_scope_type = "cluster"
     }
     siva = {
       principal_arn     = "arn:aws:iam::522814728660:role/siva"
       policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
       kubernetes_groups = []
-      access_scope_type = "cluster"
     }
     bptl = {
       principal_arn     = "arn:aws:iam::522814728660:user/eks-siva.bapatlas.site"
       policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminPolicy"
       kubernetes_groups = []
-      access_scope_type = "cluster"
     }
     hello = {
       principal_arn     = "arn:aws:iam::522814728660:role/hello"
