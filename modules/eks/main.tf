@@ -105,9 +105,9 @@ module "eks_iam_access" {
   source = "./eks-iam-access"
   for_each = var.eks_iam_access
   cluster_name = aws_eks_cluster.example.name
-  principal_arn = each.value.principal_arn
-  policy_arn = each.value.policy_arn
-  access_scope_type = each.value.access_scope_type
+  principal_arn = each.value["principal_arn"]
+  policy_arn = each.value["policy_arn"]
+  access_scope_type = each.value["access_scope_type"]
   kubernetes_groups = lookup(each.value, "kubernetes_groups", [])
   # If access_scope_type is "namespace", use the namespaces provided, otherwise default to an empty list
   namespaces = each.value.access_scope_type == "namespace" ? try(each.value.namespaces, []) : []
@@ -127,3 +127,5 @@ module "eks_iam_access" {
 
 
 
+# map and object if it is a map each.value["access_scope_type"] == "namespace" ? try(each.value["namespaces"], []) : []
+# If it is a object each.value.access_scope_type == "namespace" ? try(each.value.namespaces, []) : []
