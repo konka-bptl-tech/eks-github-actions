@@ -91,7 +91,6 @@ eks = {
       namespace              = "kube-system"
       service_account        = "aws-load-balancer-controller"
     }
-  policy_statements       = var.eks_pod_identities["policy_statements"] 
   }
 }
 
