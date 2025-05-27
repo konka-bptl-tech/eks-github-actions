@@ -141,16 +141,3 @@ module "eks_iam_access" {
 
 # map and object if it is a map each.value["access_scope_type"] == "namespace" ? try(each.value["namespaces"], []) : []
 # If it is a object each.value.access_scope_type == "namespace" ? try(each.value.namespaces, []) : []
-
-module "pod_identity" {
-  source                  = "./eks-pod-identity"
-  depends_on              = [aws_eks_cluster.example]
-  for_each = var.eks_pod_identities
-  environment             = var.environment
-  project_name            = var.project_name
-  pod_identity_role_name  = var.eks_pod_identities["pod_identity_role_name"]
-  managed_policy_arns     = var.eks_pod_identities["managed_policy_arns"]
-  cluster_name            = aws_eks_cluster.example.name
-  namespace               = var.eks_pod_identities["namespace"]
-  service_account         = var.eks_pod_identities["service_account"] 
-}
