@@ -91,6 +91,12 @@ eks = {
       namespace              = "kube-system"
       service_account        = "aws-load-balancer-controller"
     }
+    external-dns = {
+      pod_identity_role_name = "external-dns"
+      managed_policy_arns    = ["arn:aws:iam::522814728660:policy/ExternalDNSPolicy"]
+      namespace              = "kube-system"
+      service_account        = "external-dns"
+    }
   }
 }
 
