@@ -62,20 +62,20 @@ eks = {
       kubernetes_groups = []
       access_scope_type = "cluster" 
     }
-    # hello = {
-    #   principal_arn     = "arn:aws:iam::522814728660:role/hello"
-    #   policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
-    #   kubernetes_groups = []
-    #   access_scope_type = "namespace"
-    #   namespaces        = ["default"]
-    # }
-    # hi = {
-    #   principal_arn     = "arn:aws:iam::522814728660:role/hi"
-    #   policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
-    #   kubernetes_groups = []
-    #   access_scope_type = "namespace"
-    #   namespaces        = ["kube-system"]
-    # }
+    hello = {
+      principal_arn     = "arn:aws:iam::522814728660:role/hello"
+      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
+      kubernetes_groups = []
+      access_scope_type = "namespace"
+      namespaces        = ["default"]
+    }
+    hi = {
+      principal_arn     = "arn:aws:iam::522814728660:role/hi"
+      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
+      kubernetes_groups = []
+      access_scope_type = "namespace"
+      namespaces        = ["kube-system"]
+    }
   }
 }
 
