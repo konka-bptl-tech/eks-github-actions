@@ -134,5 +134,5 @@ siva_instance = {
     chmod 700 get_helm.sh
     ./get_helm.sh
     EOF
-  iam_instance_profile = "siva"
+  iam_instance_profile = "admin-eks"
 }
