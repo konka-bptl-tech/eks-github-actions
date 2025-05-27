@@ -152,9 +152,5 @@ module "pod_identity" {
   managed_policy_arns     = var.eks_pod_identities["managed_policy_arns"]
   cluster_name            = aws_eks_cluster.example.name
   namespace               = var.eks_pod_identities["namespace"]
-  service_account         = var.eks_pod_identities["service_account"]
-  policy_statements       = var.eks_pod_identities["policy_statements"]
-  
+  service_account         = var.eks_pod_identities["service_account"] 
 }
-
-variable "eks_pod_identities" {}

@@ -39,3 +39,4 @@ variable "endpoint_public_access" {
 variable "node_groups" {}
 variable "addons" {}
 variable "eks_iam_access" {}
+variable "eks_pod_identities" {}
