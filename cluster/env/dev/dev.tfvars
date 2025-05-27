@@ -123,3 +123,11 @@ ebs_pod_identity = {
   pod_identity_role_name  = "ebs-csi-controller-sa"
   managed_policy_arns     = ["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"]
 }
+
+# ALB ingress Controller Pod Identity
+alb_interess_pod_identity = {
+  namespace               = "kube-system"
+  service_account         = "aws-load-balancer-controller"
+  pod_identity_role_name  = "aws-load-balancer-controller"
+  managed_policy_arns     = ["arn:aws:iam::522814728660:policy/AWSLoadBalancerControllerIAMPolicy"]
+}
