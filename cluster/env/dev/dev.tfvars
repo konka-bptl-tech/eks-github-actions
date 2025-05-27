@@ -62,20 +62,20 @@ eks = {
       kubernetes_groups = ["masters"]
       access_scope_type = "cluster" 
     }
-    hello = {
-      principal_arn     = "arn:aws:iam::522814728660:role/hello"
-      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
-      kubernetes_groups = []
-      access_scope_type = "namespace"
-      namespaces        = ["default"]
-    }
-    hi = {
-      principal_arn     = "arn:aws:iam::522814728660:role/hi"
-      policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
-      kubernetes_groups = []
-      access_scope_type = "namespace"
-      namespaces        = ["kube-system"]
-    }
+    # hello = {
+    #   principal_arn     = "arn:aws:iam::522814728660:role/hello"
+    #   policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
+    #   kubernetes_groups = []
+    #   access_scope_type = "namespace"
+    #   namespaces        = ["default"]
+    # }
+    # hi = {
+    #   principal_arn     = "arn:aws:iam::522814728660:role/hi"
+    #   policy_arn        = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSAdminViewPolicy"
+    #   kubernetes_groups = []
+    #   access_scope_type = "namespace"
+    #   namespaces        = ["kube-system"]
+    # }
   }
 }
 
@@ -109,6 +109,9 @@ siva_instance = {
     aws eks update-kubeconfig --name dev-eks-tf-eks-cluster --region us-east-1
     echo "alias k=kubectl" >> /home/ec2-user/.bashrc
     source /home/ec2-user/.bashrc
+    curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    chmod 700 get_helm.sh
+    ./get_helm.sh
     EOF
   iam_instance_profile = "siva"
 }
