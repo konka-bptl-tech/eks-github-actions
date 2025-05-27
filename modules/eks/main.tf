@@ -99,20 +99,6 @@ resource "aws_eks_addon" "example" {
   addon_version = each.value
   resolve_conflicts_on_create = "OVERWRITE"
 }
-
-# module "eks_iam_access" {
-#   depends_on = [ aws_eks_cluster.example ]
-#   source = "./eks-iam-access"
-#   for_each = var.eks_iam_access
-#   cluster_name = aws_eks_cluster.example.name
-#   principal_arn = each.value["principal_arn"]
-#   policy_arn = each.value["policy_arn"]
-#   access_scope_type = each.value["access_scope_type"]
-#   kubernetes_groups = lookup(each.value, "kubernetes_groups", [])
-#   # If access_scope_type is "namespace", use the namespaces provided, otherwise default to an empty list
-#   namespaces = each.value.access_scope_type == "namespace" ? try(each.value.namespaces, []) : []
-#   # namespaces = each.value.access_scope_type == "namespace" ? lookup(each.value, "namespaces", []) : []
-# }
 module "eks_iam_access" {
   depends_on = [aws_eks_cluster.example]
   source     = "./eks-iam-access"
@@ -126,18 +112,18 @@ module "eks_iam_access" {
 
   namespaces = lookup(each.value, "access_scope_type", "") == "namespace" ? lookup(each.value, "namespaces", []) : []
 }
-
-# variable "access_entries" {
-#   description = "List of access entries for EKS IAM access policies."
-#   type = map(object({
-#     principal_arn      = string
-#     policy_arn         = string
-#     access_scope_type  = string
-#   }))
-#   default = {}
-# }
-
-
-
 # map and object if it is a map each.value["access_scope_type"] == "namespace" ? try(each.value["namespaces"], []) : []
 # If it is a object each.value.access_scope_type == "namespace" ? try(each.value.namespaces, []) : []
+
+module "pod_identity" {
+  source                  = "./eks-pod-identity"
+  depends_on              = [aws_eks_cluster.example]
+  for_each = var.eks_pod_identities
+  environment             = var.environment
+  project_name            = var.project_name
+  pod_identity_role_name  = var.eks_pod_identities["pod_identity_role_name"]
+  managed_policy_arns     = var.eks_pod_identities["managed_policy_arns"]
+  cluster_name            = aws_eks_cluster.example.name
+  namespace               = var.eks_pod_identities["namespace"]
+  service_account         = var.eks_pod_identities["service_account"] 
+}

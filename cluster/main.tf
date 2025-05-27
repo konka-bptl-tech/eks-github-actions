@@ -46,16 +46,5 @@ module "siva_ec2_instance" {
   private_key                    = data.aws_ssm_parameter.ec2_key.value
   iam_instance_profile           = var.siva_instance["iam_instance_profile"]
 }
-module "eks_pod_identity_ebs" {
-  source                  = "../modules/eks-pod-identity"
-  depends_on              = [module.eks]
-  environment             = var.common_variables["environment"]
-  project_name            = var.common_variables["project_name"]
-  pod_identity_role_name  = var.ebs_pod_identity["pod_identity_role_name"]
-  managed_policy_arns     = var.ebs_pod_identity["managed_policy_arns"]
-  cluster_name            = module.eks.id
-  namespace               = var.ebs_pod_identity["namespace"]
-  service_account         = var.ebs_pod_identity["service_account"]
-}
 
 
