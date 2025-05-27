@@ -33,3 +33,12 @@ resource "helm_release" "aws_lb_controller" {
     value = module.eks_vpc.vpc_id
   }
 }
+
+resource "helm_release" "externs_dns" {
+  depends_on = [module.eks, null_resource.kube-config]
+  name       = "external-dns"
+  repository = "https://kubernetes-sigs.github.io/external-dns/"
+  chart      = "external-dns"
+  namespace  = "kube-system"
+  create_namespace = false
+}
