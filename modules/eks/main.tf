@@ -121,9 +121,9 @@ module "pod_identity" {
   for_each = var.eks_pod_identities
   environment             = var.environment
   project_name            = var.project_name
-  pod_identity_role_name  = var.eks_pod_identities["pod_identity_role_name"]
-  managed_policy_arns     = var.eks_pod_identities["managed_policy_arns"]
+  pod_identity_role_name  = each.value.pod_identity_role_name
+  managed_policy_arns     = each.value.managed_policy_arns
   cluster_name            = aws_eks_cluster.example.name
-  namespace               = var.eks_pod_identities["namespace"]
-  service_account         = var.eks_pod_identities["service_account"] 
+  namespace               = each.value.namespace
+  service_account         = each.value.service_account 
 }
