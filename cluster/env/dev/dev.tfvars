@@ -78,6 +78,20 @@ eks = {
       namespaces        = ["kube-system"]
     }
   }
+  eks_pod_identities ={
+    ebs = {
+      pod_identity_role_name = "ebs-csi-controller-sa"
+      managed_policy_arns    = ["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"]
+      namespace              = "kube-system"
+      service_account        = "ebs-csi-controller-sa"
+    }
+    alb_ingress = {
+      pod_identity_role_name = "aws-load-balancer-controller"
+      managed_policy_arns    = ["arn:aws:iam::522814728660:policy/AWSLoadBalancerControllerIAMPolicy"]
+      namespace              = "kube-system"
+      service_account        = "aws-load-balancer-controller"
+    }
+  }
 }
 
 # aws eks describe-addon-versions --addon-name coredns --query "addons[0].addonVersions[*].addonVersion" --output text
@@ -115,20 +129,4 @@ siva_instance = {
     ./get_helm.sh
     EOF
   iam_instance_profile = "siva"
-}
-
-# EBS Pod Identity
-ebs_pod_identity = {
-  namespace               = "kube-system"
-  service_account         = "ebs-csi-controller-sa"
-  pod_identity_role_name  = "ebs-csi-controller-sa"
-  managed_policy_arns     = ["arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"]
-}
-
-# ALB ingress Controller Pod Identity
-alb_interess_pod_identity = {
-  namespace               = "kube-system"
-  service_account         = "aws-load-balancer-controller"
-  pod_identity_role_name  = "aws-load-balancer-controller"
-  managed_policy_arns     = ["arn:aws:iam::522814728660:policy/AWSLoadBalancerControllerIAMPolicy"]
 }

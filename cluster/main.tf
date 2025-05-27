@@ -25,6 +25,7 @@ module "eks" {
   node_groups             = var.eks["node_groups"]
   addons                  = var.eks["addons"]
   eks_iam_access          = var.eks["eks_iam_access"]
+  eks_pod_identities     = var.eks["eks_pod_identities"]
 }
 module "siva_ec2_instance" {
   depends_on                     = [module.eks]
