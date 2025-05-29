@@ -28,7 +28,7 @@ resource "aws_eks_cluster" "example" {
   tags = merge(
     var.tags,
     {
-      Name = "${local.name}-eks-cluster"
+      Name = "${local.name}"
     }
   )
 }
@@ -56,7 +56,7 @@ resource "aws_launch_template" "foo" {
     tags = merge(
       var.tags,
       {
-        Name = "${local.name}-eks-node-group-${each.key}"
+        Name = "${local.name}-ng-${each.key}"
       }
     )
   }
