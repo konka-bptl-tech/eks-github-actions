@@ -18,10 +18,10 @@ resource "helm_release" "aws_lb_controller" {
     value = module.eks.id
   }
 
-  set {
-    name  = "serviceAccount.create"
-    value = "false"
-  }
+  # set {
+  #   name  = "serviceAccount.create"
+  #   value = "false"
+  # }
 
   set {
     name  = "region"
