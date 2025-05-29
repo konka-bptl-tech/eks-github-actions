@@ -127,7 +127,7 @@ siva_instance = {
     sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
     sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
     curl -sS https://webinstall.dev/k9s | bash
-    aws eks update-kubeconfig --name dev-eks-tf-eks-cluster --region us-east-1
+    aws eks update-kubeconfig --name dev-eks-tf --region us-east-1
     echo "alias k=kubectl" >> /home/ec2-user/.bashrc
     source /home/ec2-user/.bashrc
     curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
