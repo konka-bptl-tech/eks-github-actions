@@ -3,7 +3,7 @@ locals {
 }
 # EKS Control Plane
 resource "aws_eks_cluster" "example" {
-  name = "${local.name}-eks-cluster"
+  name = "${local.name}"
 
   access_config {
     authentication_mode                         = "API_AND_CONFIG_MAP"
@@ -36,7 +36,7 @@ resource "aws_eks_cluster" "example" {
 # EKS Node Group
 resource "aws_launch_template" "foo" {
   for_each = var.node_groups
-  name     = "${local.name}-eks-node-group-${each.key}"
+  name     = "${local.name}-ng-${each.key}"
 
   vpc_security_group_ids = [aws_security_group.allow_all.id]
   block_device_mappings {

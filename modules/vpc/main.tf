@@ -10,6 +10,7 @@ resource "aws_vpc" "main" {
     var.tags,
     {
       Name = "${local.name}-vpc"
+      "kubernetes.io/cluster/${local.name}" = "owned"
     }
   )
 }
@@ -35,6 +36,9 @@ resource "aws_subnet" "public_subnet" {
     var.tags,
     {
       Name = "${local.name}-public-subnet-${split("-", var.availability_zone[count.index])[2]}"
+      "kubernetes.io/cluster/${local.name}" = "owned"
+      "kubernetes.io/role/elb"	= 1
+      
     }
   )
 }
@@ -47,6 +51,8 @@ resource "aws_subnet" "private_subnet" {
     var.tags,
     {
       Name = "${local.name}-private-subnet-${split("-", var.availability_zone[count.index])[2]}"
+      "kubernetes.io/cluster/${local.name}" = "owned"
+      "kubernetes.io/role/internal-elb"	= 1
     }
   )
 }
